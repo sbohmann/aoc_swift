@@ -33,7 +33,7 @@ func solve1B() {
             result = group.reduce(1) {lhs, rhs in lhs * rhs }
         }
     }
-    print("B:", result ?? "no result found")
+    print("1.B:", result ?? "no result found")
 }
 
 func forEachGroup<E>(groupSize: Int, data: [E], action: ([E]) -> Void) {
