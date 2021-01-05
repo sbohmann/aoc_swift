@@ -14,7 +14,7 @@
 
 let lines = readLines(path: "3/input.txt")
 
-let map = createMap(lines: lines)
+let map = Map(lines: lines)
 
 func solve3A() {
     var result = 0

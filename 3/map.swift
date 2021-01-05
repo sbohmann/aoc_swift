@@ -1,14 +1,9 @@
 
 struct Map {
-    let tree: (Int, Int) -> Bool
     let width, height: Int
-}
+    private let rows: [[Bool]]
 
-func createMap(lines: [String]) -> Map {
-    var width: Int!
-    var rows: [[Bool]]!
-
-    func initialize() {
+    init(lines: [String]) {
         rows = lines
             .map(readRow)
         let lengths = rowLengths(rows)
@@ -16,38 +11,33 @@ func createMap(lines: [String]) -> Map {
             fatalError("Rows have different lengths")
         }
         width = lengths.first!
+        height = rows.count
     }
 
-    func readRow(line: String) -> [Bool] {
-        line.map(interpretCharacter)
+    func tree(_ x: Int, _ y: Int) -> Bool {
+        rows[y][normalize(x)]
     }
 
-    func interpretCharacter(value: Character) -> Bool {
-        switch (value) {
-            case ".":
-                return false
-            case "#":
-                return true
-            default:
-                fatalError("Unsupported map character [\(value)]")
-        }
-    }
-
-    func rowLengths(_ rows: [[Bool]]) -> Set<Int> {
-        Set(rows.map{row in row.count})
-    }
-
-    func normalize(_ x: Int) -> Int {
+    private func normalize(_ x: Int) -> Int {
         ((x % width) + width) % width
     }
+}
 
-    initialize()
+private func rowLengths(_ rows: [[Bool]]) -> Set<Int> {
+    Set(rows.map{row in row.count})
+}
 
-    return Map(
-        tree: { x, y in
-            rows[y][normalize(x)]
-        },
-        width: width,
-        height: rows.count
-    )
+private func readRow(line: String) -> [Bool] {
+    line.map(interpretCharacter)
+}
+
+private func interpretCharacter(value: Character) -> Bool {
+    switch (value) {
+    case ".":
+        return false
+    case "#":
+        return true
+    default:
+        fatalError("Unsupported map character [\(value)]")
+    }
 }
