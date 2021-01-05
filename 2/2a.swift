@@ -21,10 +21,10 @@ private func parse(line: String) -> ParsedLine {
     let pattern = try! NSRegularExpression(pattern: #"(\d+)-(\d+) ([a-z]): ([a-z]+)"#)
     let match = Match(text: line, pattern: pattern)
 
-    let minimum = Int64(match.group(1))!
-    let maximum = Int64(match.group(2))!
-    let character = singleCodePoint(text: match.group(3))
-    let password = match.group(4)
+    let minimum = Int64(match[1])!
+    let maximum = Int64(match[2])!
+    let character = singleCodePoint(text: match[3])
+    let password = match[4]
 
     if (maximum < minimum) {
         fatalError("Corrupt input: [\(line)]")

@@ -26,4 +26,8 @@ struct Match {
     func group(_ n: Int) -> String {
         String(text[Range(match.range(at: n), in: text)!])
     }
+
+    subscript (n: Int) -> String {
+        group(n)
+    }
 }
